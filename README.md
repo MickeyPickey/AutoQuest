@@ -1,6 +1,8 @@
-# AutoQuest
+<h1 align="center">AutoQuest</h1>
 
-![AutoQuest](./AutoQuest.png)
+<p align="center">
+  <img src="./AutoQuest.png" alt="AutoQuest" width="400">
+</p>
 
 ## Overview
 **AutoQuest** is a World of Warcraft 1.12 (Vanilla) addon that automatically:
