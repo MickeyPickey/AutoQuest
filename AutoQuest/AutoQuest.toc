@@ -1,4 +1,0 @@
-## Interface: 11200
-## Title: AutoQuest
-## Notes: Instant auto-accept and auto-turn-in, picks highest value reward
-AutoQuest.lua
