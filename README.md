@@ -17,7 +17,9 @@ Built for the vanilla WoW 1.12 API, this addon aims to speed up questing and min
 
 ## Installation
 1. Download or clone this repository.
-2. Place the `AutoQuest` folder into your WoW AddOns directory.
+2. Place the `AutoQuest` folder into your WoW "..\Interface\AddOns" directory.
+3. Remove "-main" from the folder name.
+4. Done!
 
 All feedback appreciated,
 Thanks!
