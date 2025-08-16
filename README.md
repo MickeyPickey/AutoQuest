@@ -9,7 +9,7 @@
 - Accepts quests when you talk to NPCs.
 - Turns in completed quests instantly.
 
-Built for the vanilla WoW 1.12 API, this addon aims to speed up questing and minimizing repetitive clicks.
+This addon simply aims to speed up questing and eliminating having to stop and needlessly click accept or complete a bunch of times.
 
 ## Features
 - **Auto-Accept Quests:** No more clicking "Accept" every time.
