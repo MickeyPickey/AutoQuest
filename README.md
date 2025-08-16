@@ -4,6 +4,9 @@
   <img src="./AutoQuest.png" alt="AutoQuest" width="400">
 </p>
 
+<h2 align="center">DISCLAIMER: This addon will auto-complete ALL quests on NPC interact and pick the HIGHEST VALUE item automatically.</h2>
+<h2 align="center">I might change this in the future if there is demand for it, but for now I made this to just speed through quests.</h2>
+
 ## Overview
 **AutoQuest** is a World of Warcraft 1.12 (Vanilla) addon that automatically:
 - Accepts quests when you talk to NPCs.
