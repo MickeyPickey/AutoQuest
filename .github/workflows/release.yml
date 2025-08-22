@@ -19,9 +19,9 @@ jobs:
     - name: Zip addon folder with versioned filename
       run: |
         mkdir package
-        cp -r */ package/AutoQuest
+        cp -r ./* package/AutoQuest
         cd package
-        zip -r ../AutoQuest-${VERSION}.zip AutoQuest
+        zip -r ../AutoQuest-${VERSION}.zip .
 
     - name: Create GitHub Release
       uses: softprops/action-gh-release@v1
