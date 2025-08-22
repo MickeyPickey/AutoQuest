@@ -1,7 +1,7 @@
 -- AutoQuest.lua
 -- Vanilla WoW (1.x) - Instant auto-accept / auto-turn-in
 
-local debug = true
+local debug = false
 local StaticVendorPrices = {
   [25]=7, [35]=9, [36]=7, [37]=7, [38]=1, [39]=1,
   [40]=1, [41]=1, [42]=1, [43]=1, [44]=1, [45]=1,
@@ -3968,3 +3968,4 @@ f:SetScript("OnEvent", function()
         end
     end
 end)
+
