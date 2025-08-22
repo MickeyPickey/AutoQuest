@@ -4,8 +4,6 @@
   </a>
 </div>
 
-<h2 align="center">⚠️ DISCLAIMER: This addon will auto-complete ALL quests upon NPC interaction</h2>
-
 <h1 align="center">AutoQuest</h1>
 
 <p align="center">
