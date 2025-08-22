@@ -16,9 +16,13 @@ jobs:
     - name: Extract version from tag
       run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
     
-    - name: Zip addon folder with version
-      run: zip -r AutoQuest-${{ env.VERSION }}.zip AutoQuest
-    
+    - name: Zip addon folder with versioned filename
+      run: |
+        mkdir package
+        cp -r AutoQuest package/AutoQuest
+        cd package
+        zip -r ../AutoQuest-${VERSION}.zip AutoQuest
+
     - name: Create GitHub Release
       uses: softprops/action-gh-release@v1
       with:
