@@ -1,4 +1,9 @@
 ## Interface: 11200
 ## Title: AutoQuest
+## Author: Intet161, mod by MickeyPickey
 ## Notes: Instant auto-accept and auto-turn-in, picks highest value reward
+## Notes-ruRU: Автоматизация квестинга
+## Version: 1.1
+## X-Category: Quest
+
 AutoQuest.lua
