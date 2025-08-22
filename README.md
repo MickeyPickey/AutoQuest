@@ -34,3 +34,9 @@ Static vendor price tables adapted from **ShaguTweaks**.
 ## 💬 Feedback
 All feedback is welcome—whether it's bug reports, feature suggestions, or optimization ideas.  
 Thanks for using 
+
+## 🛠️ TODO
+Planned features for future versions:
+- **Configurable Settings UI:** Allow users to manually adjust automation behavior (e.g. enable/disable auto-accept, reward logic, etc.)  
+- **Slash Commands:** Add `/autoquest` commands for quick toggles and debugging  
+- **Flexible Reward Logic:** Option to auto-pick the highest value reward regardless of usability  
