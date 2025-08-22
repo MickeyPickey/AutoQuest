@@ -1,10 +1,10 @@
+<h1 align="center">AutoQuest</h1>
+
 <div align="center">
   <a href="https://github.com/MickeyPickey/AutoQuest/releases/latest">
     <img src="https://img.shields.io/github/v/release/MickeyPickey/AutoQuest?label=Download" alt="Download AutoQuest">
   </a>
 </div>
-
-<h1 align="center">AutoQuest</h1>
 
 <p align="center">
   <img src="./AutoQuest.png" alt="AutoQuest" width="400">
