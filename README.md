@@ -1,3 +1,9 @@
+<div align="center">
+  <a href="https://github.com/MickeyPickey/AutoQuest/releases/latest">
+    <img src="https://img.shields.io/github/v/release/MickeyPickey/AutoQuest?label=Download" alt="Download AutoQuest">
+  </a>
+</div>
+
 <h2 align="center">⚠️ DISCLAIMER: This addon will auto-complete ALL quests upon NPC interaction</h2>
 
 <h1 align="center">AutoQuest</h1>
@@ -21,11 +27,14 @@ No more tedious clicking—just pure questing efficiency.
 - **Performance-Friendly:** Lightweight and optimized for minimal impact  
 - **Vanilla-Compatible:** Fully supports the WoW 1.12 API  
 
+## 📥 Download
+
+You can always grab the latest version here:  
+👉 [Download Latest Release](https://github.com/MickeyPickey/AutoQuest/releases/latest)
+
 ## 📦 Installation
 1. Download or clone this repository  
 2. Place the `AutoQuest` folder into your WoW `..\Interface\AddOns` directory  
-3. Rename the folder to remove any suffix like `-main`  
-4. Launch the game and enjoy automated questing  
 
 ## 🙌 Credits
 Special thanks to **Intet161** for foundational contributions and inspiration.  
