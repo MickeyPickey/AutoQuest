@@ -19,7 +19,7 @@ jobs:
     - name: Zip addon folder with versioned filename
       run: |
         mkdir -p package/AutoQuest
-        cp -r ./* package/AutoQuest/
+        rsync -av --exclude='package' ./ package/AutoQuest/
         cd package
         zip -r ../AutoQuest-${VERSION}.zip .
 
