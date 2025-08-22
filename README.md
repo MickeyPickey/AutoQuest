@@ -1,4 +1,4 @@
-<h2 align="center">DISCLAIMER: This addon will auto-complete ALL quests on NPC interact and pick the HIGHEST VALUE item automatically.</h2>
+<h2 align="center">⚠️ DISCLAIMER: This addon will auto-complete ALL quests upon NPC interaction</h2>
 
 <h1 align="center">AutoQuest</h1>
 
@@ -6,24 +6,31 @@
   <img src="./AutoQuest.png" alt="AutoQuest" width="400">
 </p>
 
-## Overview
-**AutoQuest** is a World of Warcraft 1.12 (Vanilla) addon that automatically:
-- Accepts quests when you talk to NPCs.
-- Turns in completed quests instantly.
+## 🧭 Overview
+**AutoQuest** is a lightweight World of Warcraft 1.12 (Vanilla) addon designed to streamline questing by automating repetitive interactions. It automatically:
+- Accepts quests when you talk to NPCs  
+- Turns in completed quests instantly  
 
-This addon simply aims to speed up questing and eliminating having to stop and needlessly click accept or complete a bunch of times.
+No more tedious clicking—just pure questing efficiency.
 
-## Features
-- **Auto-Accept Quests:** No more clicking "Accept" every time.
-- **Auto-Turn In Quests:** Instantly completes eligible quests.
-- **Lightweight & Fast:** Minimal performance impact.
-- **Vanilla API Support:** Compatible with WoW 1.12 client.
+## ✨ Features
+- **Auto-Accept Quests:** Instantly accepts available quests from NPCs  
+- **Auto-Turn In Quests:** Automatically completes eligible quests  
+- **Smart Reward Selection:** If all quest rewards are unusable by the player, the addon selects the one with the highest vendor value  
+- **Manual Override:** Hold the **Shift** key to temporarily pause automation and interact manually  
+- **Performance-Friendly:** Lightweight and optimized for minimal impact  
+- **Vanilla-Compatible:** Fully supports the WoW 1.12 API  
 
-## Installation
-1. Download or clone this repository.
-2. Place the `AutoQuest` folder into your WoW "..\Interface\AddOns" directory.
-3. Remove "-main" from the folder name.
-4. Done!
+## 📦 Installation
+1. Download or clone this repository  
+2. Place the `AutoQuest` folder into your WoW `..\Interface\AddOns` directory  
+3. Rename the folder to remove any suffix like `-main`  
+4. Launch the game and enjoy automated questing  
 
-All feedback appreciated,
-Thanks!
+## 🙌 Credits
+Special thanks to **Intet161** for foundational contributions and inspiration.  
+Static vendor price tables adapted from **ShaguTweaks**.
+
+## 💬 Feedback
+All feedback is welcome—whether it's bug reports, feature suggestions, or optimization ideas.  
+Thanks for using 
