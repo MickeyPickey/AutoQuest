@@ -5,8 +5,8 @@ local defaults = {
   debug = false,
   autoAccept = true,
   autoReward = true,
-  autoRewardUnusable = true,
-  followTourGuide = false,
+  autoRewardUnusableOnly = true,
+  followTourGuide = true,
 }
 
 function AutoQuest:InitSettings()

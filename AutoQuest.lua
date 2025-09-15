@@ -1,13 +1,27 @@
 AutoQuest = AutoQuest or {}
 
+-- for emergency debug purpuses
+local debug = false
+
 local private = {
   slash1 = "/aq",
   slash2 = "/autoquest",
 }
 
+--------------------------------------------------------------------------------------------------
+-- -- some string functions
+-- vanilla available string operations:
+--    sub, gfind, rep, gsub, char, dump, find, upper, len, format, byte, lower
+--------------------------------------------------------------------------------------------------
+local strgmatch = string.gmatch or string.gfind
+local strmatch = string.match or function(s, pattern)
+  local _, _, c1, c2 = string.find(s, pattern)
+  return c1, c2
+end
+
 function private.ParseVersion(versionString)
   -- Converts "1.12.1" → 11201 (Blizzard-style)
-  local major, minor, patch = string.match(versionString or "", "(%d+)%.(%d+)%.(%d+)")
+  local major, minor, patch = strmatch(versionString or "", "(%d+)%.(%d+)%.(%d+)")
   major = tonumber(major) or 0
   minor = tonumber(minor) or 0
   patch = tonumber(patch) or 0
@@ -55,7 +69,7 @@ function AutoQuest:Init()
   f:RegisterEvent("GOSSIP_SHOW")
   f:RegisterEvent("UI_INFO_MESSAGE")
 
-  f:SetScript("OnEvent", function(_, event, arg1, arg2)
+  f:SetScript("OnEvent", function()
     AutoQuest:EventHandler(event, arg1, arg2)
   end)
 
@@ -199,13 +213,15 @@ function AutoQuest:IsQuestComplete(name)
   end
 end
 
-function AutoQuest:EventHandler(...)
-  local event, arg1, arg2 = unpack(arg)
+function AutoQuest:EventHandler(event, arg1, arg2)
+  -- local event, arg1, arg2 = unpack(arg)
+  debug_print(event, arg1, arg2)
 
   -- Initializing modules
   if event == "PLAYER_ENTERING_WORLD" then
     self:InitModules()
     self:HookTourGuideAddon()
+    self:Greetings()
 
   -- Testing if we can get "Speak to ..." quests completed flag
   elseif event == "UI_INFO_MESSAGE" then
@@ -252,7 +268,7 @@ function AutoQuest:EventHandler(...)
       end
 
       debug_print("Reward selection:", bestIndex, bestValue)
-      if self.Settings.autoReward and (not self.Settings.autoRewardUnusable or allUnusable) then
+      if self.Settings.autoReward and (not self.Settings.autoRewardUnusableOnly or allUnusable) then
         GetQuestReward(bestIndex)
       end
     end
@@ -308,9 +324,10 @@ function AutoQuest:SlashHandler(msg)
     self:Print("List of available settings:")
     for key, default in pairs(self.SettingsDefaultValues) do
       local value = self:GetSetting(key)
-      print(" -", key, "=", tostring(value))
+      print(" -", key, "=", self:ColorText(tostring(value), self:GetStatusColor(value)))
     end
-    print(format("Usage: /%s (%s) <setting> [on|off|true|false|1|0]", tostring(private.slash1), tostring(private.slash2)))
+    print(print(" -", "reset", "=", "reset settings to defaults"))
+    print(format('Usage: %s (%s) <setting> [on||off||true||false||1||0]', self:ColorText(tostring(private.slash1), "yellow"), self:ColorText(tostring(private.slash2), "yellow")))
     return
   end
 
@@ -320,33 +337,39 @@ function AutoQuest:SlashHandler(msg)
   end
 
   local setting = args[1]
-  local value = args[2]
 
-  if not self.SettingsDefaultValues[setting] then
+  if self.SettingsDefaultValues[setting] == nil and setting ~= "reset" then
     self:Print("Unknown setting:", setting)
     return
   end
 
-  if not value then
-    -- Toggle if no value provided
-    local current = self:GetSetting(setting)
-    self:SetSetting(setting, not current)
-    self:Print(setting .. " toggled to " .. tostring(not current))
-    return
-  end
-
-  local normalized
-  if value == "on" or value == "true" or value == "1" then
-    normalized = true
-  elseif value == "off" or value == "false" or value == "0" then
-    normalized = false
+  if setting == "reset" then
+    self:ResetSettings()
+    self:Print("All settings have been reset!")
   else
-    self:Print("Invalid value:", value)
-    return
-  end
+    local value = args[2]
 
-  self:SetSetting(setting, normalized)
-  self:Print(setting .. " set to " .. tostring(normalized))
+    if not value then
+      -- Toggle if no value provided
+      local current = self:GetSetting(setting)
+      self:SetSetting(setting, not current)
+      self:Print(setting .. " toggled to " .. self:ColorText(tostring(not current), self:GetStatusColor(not current)))
+      return
+    end
+
+    local normalized
+    if value == "on" or value == "true" or value == "1" then
+      normalized = true
+    elseif value == "off" or value == "false" or value == "0" then
+      normalized = false
+    else
+      self:Print("Invalid value:", value)
+      return
+    end
+
+    self:SetSetting(setting, normalized)
+    self:Print(setting .. " set to " .. self:ColorText(tostring(normalized), self:GetStatusColor(normalized)))
+  end
 end
 
 function AutoQuest:Print(...)
@@ -357,7 +380,7 @@ function AutoQuest:Print(...)
 end
 
 function AutoQuest:DebugPrint(...)
-  if self.Settings.debug then
+  if debug or (self.Settings and self.Settings.debug) then
     local titleFormatStr = self:ColorText("%s", "red")
 
     self:Print(format(titleFormatStr, "[DEBUG]:"), unpack(arg))
@@ -371,7 +394,8 @@ function AutoQuest:Greetings()
 
   self:Print("Your questing assistant is ON. No more clicking through 37 gossip options! :)")
   debug_print("Client:", client, "Build:", build, "Locale:", locale)
-  self:Print(format("Use %s or %s to configure settings.", tostring(private.slash1), tostring(private.slash2)))
+  if self.TG then self:Print("A TourGuide addon was found. Compatibility mod available!") end
+  self:Print(format("Use %s or %s to configure settings.", self:ColorText(tostring(private.slash1), "yellow"), self:ColorText(tostring(private.slash2), "yellow")))
   self:Print("Now go forth, brave soul. May your bags be empty and your rewards be shiny!")
 end
 
