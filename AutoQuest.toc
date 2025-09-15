@@ -1,10 +1,19 @@
 ## Interface: 11200
+
 ## Title: AutoQuest
-## Author: Intet161, mod by MickeyPickey
+## Author: MickeyPickey. Credits to Intet161 for foundational contributions and inspiration.
 ## Notes: Instant auto-accept and auto-turn-in, picks highest value reward
 ## Notes-ruRU: Автоматизация квестинга
-## Version: 1.1.1
-## X-Category: Quest
+## Version: 2.0.0
 
+## X-Category: Quests & Leveling
+## X-Credits: Intet161, Shagu
+## X-License: All Rights Reserved: You are free to fork and modify on GitHub, please ask me about anything else.
+## X-Website: https://github.com/MickeyPickey/AutoQuest.git
+## X-Curse-Project-ID: 
+
+## SavedVariablesPerCharacter: AutoQuestCharDB
+
+ItemDB.lua
+Settings.lua
 AutoQuest.lua
-
