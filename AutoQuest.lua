@@ -95,6 +95,95 @@ function AutoQuest:HookTourGuideAddon()
   end
 end
 
+function AutoQuest:IsItemUsable(itemId)
+  if not itemId then
+    debug_print("IsItemUsable: invalid itemId")
+    return nil
+  end
+
+  local tooltip = AutoQuest.ScanTooltip
+  if not tooltip then
+    tooltip = CreateFrame("GameTooltip", "ScanTooltip", UIParent, "GameTooltipTemplate")
+    AutoQuest.ScanTooltip = tooltip
+  end
+
+  if not tooltip or not tooltip.SetHyperlink then
+    debug_print("IsItemUsable: tooltip failed to initialize")
+    return nil
+  end
+
+  tooltip:SetOwner(UIParent, "ANCHOR_NONE")
+  tooltip:SetHyperlink("item:" .. itemId)
+
+  local usable = true
+
+  for i = 1, tooltip:NumLines() do
+    local leftText = _G["ScanTooltipTextLeft" .. i]
+    local rightText = _G["ScanTooltipTextRight" .. i]
+
+    local function isRed(textObj)
+      if textObj then
+        local r, g, b = textObj:GetTextColor()
+        return r > 0.9 and g < 0.2 and b < 0.2
+      end
+      return false
+    end
+
+    if isRed(leftText) or isRed(rightText) then
+      usable = false
+      break
+    end
+  end
+
+  debug_print("IsItemUsable:", itemId, usable)
+  return usable
+end
+
+-- OLD
+-- function AutoQuest:IsItemUsable(itemId)
+--     local tooltip = CreateFrame("GameTooltip", "ScanTooltip", nil, "GameTooltipTemplate")
+--     tooltip:SetOwner(UIParent, "ANCHOR_NONE")
+--     tooltip:SetHyperlink("item:" .. itemId)
+
+--     for i = 1, tooltip:NumLines() do
+--         local leftText = _G["ScanTooltipTextLeft" .. i]
+--         local rightText = _G["ScanTooltipTextRight" .. i]
+
+--         local function isRed(textObj)
+--             if textObj then
+--                 local r, g, b = textObj:GetTextColor()
+--                 return r > 0.9 and g < 0.2 and b < 0.2
+--             end
+--             return false
+--         end
+
+--         if isRed(leftText) or isRed(rightText) then
+--             return false
+--         end
+--     end
+
+--     return true
+-- end
+
+
+function AutoQuest:GetVendorPrice(itemId)
+  local _, _, _, _, _, _, _, _, _, _, price = GetItemInfo(itemId)
+
+  if price and price > 0 then
+    debug_print("Vendor price from GetItemInfo:", itemId, price)
+    return price
+  end
+
+  local fallback = self.DB.StaticVendorPrices and self.DB.StaticVendorPrices[itemId]
+  if fallback then
+    debug_print("Fallback vendor price from DB:", itemId, fallback)
+    return fallback
+  end
+
+  debug_print("No vendor price found for item:", itemId)
+  return nil
+end
+
 function AutoQuest:ShouldAccept(name)
   return not self.Settings.followTourGuide or (self.TG and self.TG:IsQuestAcceptable(name))
 end
@@ -215,108 +304,75 @@ function AutoQuest:EventHandler(...)
 end
 
 function AutoQuest:SlashHandler(msg)
-  if msg == "" then
+  if not msg or msg == "" then
+    self:Print("List of available settings:")
+    for key, default in pairs(self.SettingsDefaultValues) do
+      local value = self:GetSetting(key)
+      print(" -", key, "=", tostring(value))
+    end
+    print(format("Usage: /%s (%s) <setting> [on|off|true|false|1|0]", tostring(private.slash1), tostring(private.slash2)))
+    return
+  end
+
+  local args = {}
+  for word in string.gfind(msg, "%S+") do
+    table.insert(args, word)
+  end
+
+  local setting = args[1]
+  local value = args[2]
+
+  if not self.SettingsDefaultValues[setting] then
+    self:Print("Unknown setting:", setting)
+    return
+  end
+
+  if not value then
+    -- Toggle if no value provided
+    local current = self:GetSetting(setting)
+    self:SetSetting(setting, not current)
+    self:Print(setting .. " toggled to " .. tostring(not current))
+    return
+  end
+
+  local normalized
+  if value == "on" or value == "true" or value == "1" then
+    normalized = true
+  elseif value == "off" or value == "false" or value == "0" then
+    normalized = false
   else
-  end
-end
-
--- OLD
--- function AutoQuest:IsItemUsable(itemId)
---     local tooltip = CreateFrame("GameTooltip", "ScanTooltip", nil, "GameTooltipTemplate")
---     tooltip:SetOwner(UIParent, "ANCHOR_NONE")
---     tooltip:SetHyperlink("item:" .. itemId)
-
---     for i = 1, tooltip:NumLines() do
---         local leftText = _G["ScanTooltipTextLeft" .. i]
---         local rightText = _G["ScanTooltipTextRight" .. i]
-
---         local function isRed(textObj)
---             if textObj then
---                 local r, g, b = textObj:GetTextColor()
---                 return r > 0.9 and g < 0.2 and b < 0.2
---             end
---             return false
---         end
-
---         if isRed(leftText) or isRed(rightText) then
---             return false
---         end
---     end
-
---     return true
--- end
-
-function AutoQuest:IsItemUsable(itemId)
-  if not itemId then
-    debug_print("IsItemUsable: invalid itemId")
-    return nil
+    self:Print("Invalid value:", value)
+    return
   end
 
-  local tooltip = AutoQuest.ScanTooltip
-  if not tooltip then
-    tooltip = CreateFrame("GameTooltip", "ScanTooltip", UIParent, "GameTooltipTemplate")
-    AutoQuest.ScanTooltip = tooltip
-  end
-
-  if not tooltip or not tooltip.SetHyperlink then
-    debug_print("IsItemUsable: tooltip failed to initialize")
-    return nil
-  end
-
-  tooltip:SetOwner(UIParent, "ANCHOR_NONE")
-  tooltip:SetHyperlink("item:" .. itemId)
-
-  local usable = true
-
-  for i = 1, tooltip:NumLines() do
-    local leftText = _G["ScanTooltipTextLeft" .. i]
-    local rightText = _G["ScanTooltipTextRight" .. i]
-
-    local function isRed(textObj)
-      if textObj then
-        local r, g, b = textObj:GetTextColor()
-        return r > 0.9 and g < 0.2 and b < 0.2
-      end
-      return false
-    end
-
-    if isRed(leftText) or isRed(rightText) then
-      usable = false
-      break
-    end
-  end
-
-  debug_print("IsItemUsable:", itemId, usable)
-  return usable
-end
-
-
-function AutoQuest:GetVendorPrice(itemId)
-  local _, _, _, _, _, _, _, _, _, _, price = GetItemInfo(itemId)
-
-  if price and price > 0 then
-    debug_print("Vendor price from GetItemInfo:", itemId, price)
-    return price
-  end
-
-  local fallback = self.DB.StaticVendorPrices and self.DB.StaticVendorPrices[itemId]
-  if fallback then
-    debug_print("Fallback vendor price from DB:", itemId, fallback)
-    return fallback
-  end
-
-  debug_print("No vendor price found for item:", itemId)
-  return nil
+  self:SetSetting(setting, normalized)
+  self:Print(setting .. " set to " .. tostring(normalized))
 end
 
 function AutoQuest:Print(...)
-  private.Print("AutoQuest:", unpack(arg))
+
+  local titleFormatStr = self:ColorText("%s", "turtle")
+
+  private.Print(format(titleFormatStr, "AutoQuest:"), unpack(arg))
 end
 
 function AutoQuest:DebugPrint(...)
   if self.Settings.debug then
-    self:Print("[DEBUG]:", unpack(arg))
+    local titleFormatStr = self:ColorText("%s", "red")
+
+    self:Print(format(titleFormatStr, "[DEBUG]:"), unpack(arg))
   end
+end
+
+function AutoQuest:Greetings()
+  local build = GetBuildInfo()
+  local locale = GetLocale()
+  local client = self.isTW and "Turtle WoW" or "Vanilla WoW"
+
+  self:Print("Your questing assistant is ON. No more clicking through 37 gossip options! :)")
+  debug_print("Client:", client, "Build:", build, "Locale:", locale)
+  self:Print(format("Use %s or %s to configure settings.", tostring(private.slash1), tostring(private.slash2)))
+  self:Print("Now go forth, brave soul. May your bags be empty and your rewards be shiny!")
 end
 
 -- initializing addon
