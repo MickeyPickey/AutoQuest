@@ -30,14 +30,14 @@ No more watching someone steal your quest giver while you blink 😑
 - **Performance-Friendly:** Lightweight and optimized for minimal impact  
 - **Vanilla-Compatible:** Fully supports the WoW 1.12 API  
 
-## 📥 Download
-
-You can always grab the latest version here:  
-👉 [Download Latest Release](https://github.com/MickeyPickey/AutoQuest/releases/latest)
-
 ## 📦 Installation
-1. Download or clone this repository  
-2. Place the `AutoQuest` folder into your WoW `..\Interface\AddOns` directory  
+**Option 1: Using GitAddonManager or 🐢 Launcher**  
+Add the addon using the “Add new addon” feature with this Git URL:  
+<pre>https://github.com/MickeyPickey/AutoQuest.git</pre>
+
+**Option 2: Manual Installation**  
+[📥 Download Latest Release](https://github.com/MickeyPickey/AutoQuest/releases/latest)
+Then extract and place the `AutoQuest` folder into your WoW `Interface/AddOns` directory.
 
 ## 🙌 Credits
 Special thanks to **Intet161** for foundational contributions and inspiration.  
