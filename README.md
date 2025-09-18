@@ -2,7 +2,7 @@
 
 <div align="center">
   <a href="https://github.com/MickeyPickey/AutoQuest/releases/latest">
-    <img src="https://img.shields.io/github/v/release/MickeyPickey/AutoQuest?label=Download" alt="Download AutoQuest">
+    <img src="https://img.shields.io/github/v/release/MickeyPickey/AutoQuest?label=Download" alt="Download AutoQuest"><img src="https://img.shields.io/github/downloads/MickeyPickey/AutoQuest/total?label=Downloads" alt="Total Downloads">
   </a>
 </div>
 
