@@ -33,7 +33,9 @@ No more watching someone steal your quest giver while you blink 😑
 ## 📦 Installation
 **Option 1: Using GitAddonManager or 🐢 Launcher**  
 Add the addon using the “Add new addon” feature with this Git URL:  
-<pre>https://github.com/MickeyPickey/AutoQuest.git</pre>
+```
+https://github.com/MickeyPickey/AutoQuest.git
+```
 
 **Option 2: Manual Installation**  
 [📥 Download Latest Release](https://github.com/MickeyPickey/AutoQuest/releases/latest)
