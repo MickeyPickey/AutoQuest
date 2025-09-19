@@ -61,6 +61,7 @@ function AutoQuest:Init()
   local f = CreateFrame("Frame")
   AutoQuest.eventFrame = f
 
+  f:RegisterEvent("ADDON_LOADED")
   f:RegisterEvent("PLAYER_ENTERING_WORLD")
   f:RegisterEvent("QUEST_DETAIL")
   f:RegisterEvent("QUEST_PROGRESS")
@@ -103,6 +104,7 @@ function AutoQuest:HookTourGuideAddon()
     self.TG = TG
     self.isTourGuideHooked = true
 
+    self:Print("A TourGuide addon was found. Compatibility mode available!")
     debug_print("✅ Hooked TourGuide successfully.")
   else
     debug_print("TourGuide not found.")
@@ -218,13 +220,15 @@ function AutoQuest:EventHandler(event, arg1, arg2)
   debug_print(event, arg1, arg2)
 
   -- Initializing modules
-  if event == "PLAYER_ENTERING_WORLD" then
+  if event == "ADDON_LOADED" and arg1 == "AutoQuest" then
     self:InitModules()
     self:HookTourGuideAddon()
+  if event == "ADDON_LOADED" and (arg1 == "TourGuide" or arg1 == "TourGuide-Turtle") then
+    self:HookTourGuideAddon()
+  elseif event == "PLAYER_ENTERING_WORLD" then
     self:Greetings()
-
-  -- Testing if we can get "Speak to ..." quests completed flag
   elseif event == "UI_INFO_MESSAGE" then
+     -- Testing if we can get "Speak to ..." quests completed flag
     debug_print(event, arg1, arg2)
   end
 
@@ -394,7 +398,6 @@ function AutoQuest:Greetings()
 
   self:Print("Your questing assistant is ON. No more clicking through 37 gossip options! :)")
   debug_print("Client:", client, "Build:", build, "Locale:", locale)
-  if self.TG then self:Print("A TourGuide addon was found. Compatibility mod available!") end
   self:Print(format("Use %s or %s to configure settings.", self:ColorText(tostring(private.slash1), "yellow"), self:ColorText(tostring(private.slash2), "yellow")))
   self:Print("Now go forth, brave soul. May your bags be empty and your rewards be shiny!")
 end
