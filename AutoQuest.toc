@@ -4,7 +4,7 @@
 ## Author: MickeyPickey. Credits to Intet161 for foundational contributions and inspiration.
 ## Notes: Instant auto-accept and auto-turn-in, picks highest value reward
 ## Notes-ruRU: Автоматизация квестинга
-## Version: 2.0.1
+## Version: 2.0.2
 
 ## X-Category: Quests & Leveling
 ## X-Credits: Intet161, Shagu
