@@ -220,11 +220,13 @@ function AutoQuest:EventHandler(event, arg1, arg2)
   debug_print(event, arg1, arg2)
 
   -- Initializing modules
-  if event == "ADDON_LOADED" and arg1 == "AutoQuest" then
-    self:InitModules()
-    self:HookTourGuideAddon()
-  if event == "ADDON_LOADED" and (arg1 == "TourGuide" or arg1 == "TourGuide-Turtle") then
-    self:HookTourGuideAddon()
+  if event == "ADDON_LOADED" then
+    if arg1 == "AutoQuest" then
+      self:InitModules()
+      self:HookTourGuideAddon()
+    elseif arg1 == "TourGuide" or arg1 == "TourGuide-Turtle" then
+      self:HookTourGuideAddon()
+    end
   elseif event == "PLAYER_ENTERING_WORLD" then
     self:Greetings()
   elseif event == "UI_INFO_MESSAGE" then
